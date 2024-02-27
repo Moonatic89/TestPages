@@ -1,31 +1,51 @@
 <template>
-    <div class="flex justify-center items-center w-screen h-screen">
-        <div class="flex flex-col">
-            <div class="" v-for="single in list">
-                <label>
-                    {{ single.name }}
-                    <input type="checkbox" v-model="single.active">
-                </label>
+    <section name="Main Section" class="h-screen bg-red-300 flex flex-col justify-between">
+        <section name="Heading" class="w-full h-12 bg-cyan-300">
+            <Button></Button>
+        </section>
+        <section name="Body" class="w-full bg-green-300">
+            Categorie:
+            <div v-for="category in categories"></div>
+        </section>
+        <section name="CTA" class="w-full h-12 bg-cyan-300 ">
 
-            </div>
-        </div>
-
-    </div>
+        </section>
+    </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-
-const list = ref([
-    { name: 'Progetto numero 1', active: false },
-    { name: 'Progetto numero 2', active: false },
-    { name: 'Progetto numero 3', active: true },
-    { name: 'Progetto numero 4', active: false },
-])
+import { onMounted, ref } from 'vue';
 
 
 
+// #region Category
 
-const toggle = ref(false)
+const categories = ref([])
+
+onMounted(() => {
+    categories.value = getFromLocalStorage('categories');
+})
+
+
+// #endregion
+
+
+// #region Save and Load
+
+const saveToLocalStorage = (key, data) => {
+    const dataString = JSON.stringify(data);
+    localStorage.setItem(key, dataString);
+};
+
+const getFromLocalStorage = (key) => {
+    const dataString = localStorage.getItem(key);
+    if (dataString) {
+        return JSON.parse(dataString);
+    }
+    return null;
+};
+
+
+// #endregion
+
 </script>
